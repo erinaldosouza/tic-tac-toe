@@ -83,21 +83,12 @@ export default class Board extends React.Component<any> {
   }
 
   private verifyWinner(squares: any, player: string) {
-    let count = 0;
-    const toWin = 3;
-    this.sequencesVictory
-        .forEach(sequenceArr => {
-          if(count !== toWin) {
-            count = 0;
-            sequenceArr.forEach(position => {
-              if(squares[position] === player) {
-                count++;
-              } else {
-                count = 0;
-              }
-            })
-          }
-         });
-    return count === toWin;
+    return this.sequencesVictory
+               .some(sequenceArr => {
+                 const[a, b, c] = sequenceArr;
+                 const squareA = squares[a];
+                 return squareA && squareA === squares[b] && squareA === squares[c];
+               });
+
   }
 }
