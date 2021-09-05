@@ -58,7 +58,7 @@ export default class Board extends React.Component<any> {
   private renderSquare(i: number) {
     const {squares}:any = this.state;
     return <Square 
-             value={squares[i]} 
+             squareState={squares[i]} 
              onClick={() => this.handleClick(i)}
             />;
   }
@@ -69,25 +69,38 @@ export default class Board extends React.Component<any> {
       let {squares, xIsNext}:any = this.state;
       
       if(squares[i] === null) {
-        squares = squares.slice();
+        const squaresNew = squares.slice();
+        console.log(squaresNew)
         const player =  xIsNext ? 'X' : 'O';
-        squares[i] = player;
-        this.setState({squares:squares, xIsNext: !xIsNext})
-        this.isFinished = this.verifyWinner(squares, player);
-        
+        squaresNew[i] = { value: player };
+        const winnerSeq =  this.verifyWinner(squaresNew, player);
+
+        this.isFinished = winnerSeq.length > 0;
+       
         if(this.isFinished) {
+          winnerSeq.map(v => {
+            v.map(i => {
+              squaresNew[i].squareClass = "square-green";
+            })
+          })
+
           this.props.onFinish(player);
         }
+
+        this.setState({squares:squaresNew, xIsNext: !xIsNext})
       }
     }
   }
 
   private verifyWinner(squares: any, player: string) {
     return this.sequencesVictory
-               .some(sequenceArr => {
+               .filter(sequenceArr => {
                  const[a, b, c] = sequenceArr;
                  const squareA = squares[a];
-                 return squareA && squareA === squares[b] && squareA === squares[c];
+                 return squareA 
+                        && squareA.value 
+                        && squareA.value === squares[b]?.value 
+                        && squareA.value === squares[c]?.value;
                });
 
   }

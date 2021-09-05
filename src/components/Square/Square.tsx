@@ -2,10 +2,12 @@ import React from 'react';
 import styles from './Square.module.scss';
 
 function square(props: any) {
+  console.log(props.squareState)
   return (
-    <button className="square" 
+    <button className={props.squareState?.squareClass 
+                       ? props.squareState?.squareClass  : "square"} 
             onClick={props.onClick}>
-        {props.value}
+        {props.squareState?.value}
     </button>
   );
 }
