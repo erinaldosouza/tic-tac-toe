@@ -8,8 +8,6 @@ export default class Board extends React.Component<any> {
   constructor(props: any) {
     super(props);
     this.setStartState();
-    this.renderSquare = this.renderSquare.bind(this);
-    this.renderMultSquare = this.renderMultSquare.bind(this);
   }
 
   private isFinished = false;
@@ -30,7 +28,7 @@ export default class Board extends React.Component<any> {
     const boradSquares = [
       [0,1,2],[3,4,5], [6,7,8]
     ]
-    
+
     return (
       <div>
         <div className="status">{status}</div>
@@ -39,7 +37,7 @@ export default class Board extends React.Component<any> {
     );
   }
 
-  private setStartState() {
+  setStartState = () => {
     this.state = {
       squares: Array(9).fill(null),
       xIsNext: true,
@@ -48,7 +46,7 @@ export default class Board extends React.Component<any> {
      this.isFinished = false;
   }
 
-  private renderSquare(i: number) {
+  renderSquare = (i: number) => {
     const {squares}:any = this.state;
     return (
         <Square 
@@ -57,7 +55,7 @@ export default class Board extends React.Component<any> {
           />
     )
   }
-  private renderMultSquare(squareArray: Array<number>) {
+  renderMultSquare = (squareArray: Array<number>) => {
     return (
       <div className="board-row">
         {squareArray.map(this.renderSquare)}
@@ -65,7 +63,7 @@ export default class Board extends React.Component<any> {
     );
   }
 
-  private handleClick(i: any) {
+  handleClick = (i: any) => {
     if(!this.isFinished) {
      
       let {squares, xIsNext}:any = this.state;
@@ -94,7 +92,7 @@ export default class Board extends React.Component<any> {
     }
   }
 
-  private verifyWinner(squares: any, player: string) {
+  verifyWinner = (squares: any, player: string) => {
     return this.sequencesVictory
                .filter(sequenceArr => {
                  const[a, b, c] = sequenceArr;

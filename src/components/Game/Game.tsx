@@ -9,20 +9,17 @@ export default class Game extends React.Component<any> {
   constructor(props:any) {
     super(props);
     this.state = { gameState: "Play the game", status: 'started' }
-    this.restart = this.restart.bind(this);
-    this.finish = this.finish.bind(this);
-    this.start = this.start.bind(this);
   }
 
-  finish(winner: string) {
+  finish = (winner: string) => {
     this.setState({gameState: `The winner is ${winner}`, status: 'finished'});
   }
 
-  start() {
+  start = () => {
     this.setState({ gameState: "Play the game", status: 'started' });
   }
 
-  restart() {
+  restart = () => {
    this.setState({ gameState: "Play the game", status: 'restarted' });
   }
 
